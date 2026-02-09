@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:on_gil/driver/menu/driver_main.dart';
+import 'package:on_gil/walker/walker_main.dart';
 import 'package:vibration/vibration.dart';
 
 void main() {
@@ -38,14 +40,13 @@ class _SymbolPageState extends State<SymbolPage>
       duration: const Duration(milliseconds: 800),
     );
 
-    // 페이드 인/아웃
     _fade = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
     );
 
-    _controller.forward(); // 페이드 인
+    _controller.forward();
 
-    Future.delayed(const Duration(seconds: 2), () async {
+    Future.delayed(const Duration(seconds: 3), () async {
       if (!mounted) return;
 
       await _controller.reverse();
@@ -85,6 +86,18 @@ class _SymbolPageState extends State<SymbolPage>
                   color: Color(0xFFFFC30B),
                 ),
               ),
+
+
+              const SizedBox(height: 12),
+              const Text(
+                '본 서비스는 교통 시설을 제어하지 않으며,\n AI 기반 주의 안내만 제공합니다.',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 15,
+                  color: Colors.black54,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
             ],
           ),
         ),
@@ -120,6 +133,17 @@ class MainScreen extends StatelessWidget {
                 letterSpacing: -2.0,
               ),
             ),
+
+            const Text(
+              'AI기반 보행•운전 안전 도우미',
+              style: TextStyle(
+                fontSize: 16,
+                fontFamily: 'Inter',
+                fontWeight: FontWeight.bold,
+                color: Color(0xFFFFC30B),
+                letterSpacing: -2.0,
+              ),
+            ),
             const SizedBox(height: 15),
 
             // 운전자용 버튼
@@ -128,14 +152,18 @@ class MainScreen extends StatelessWidget {
               height: 60,
               child: ElevatedButton(
                 onPressed: () {
-                  _playVibration();
-                  print("운전자용 화면으로 이동");
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const DMain(),
+                    ),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,
                   foregroundColor: const Color(0xFFFFC30B),
                   shape: const StadiumBorder(),
-                  elevation: 0,
+                  elevation: 5,
                 ),
                 child: const Text(
                   '운전자용',
@@ -154,15 +182,20 @@ class MainScreen extends StatelessWidget {
               height: 60,
               child: ElevatedButton(
                 onPressed: () {
-                  _playVibration();
-                  print("보행자용 화면으로 이동");
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => WalkerMain(),
+                    ),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFFFC30B),
                   foregroundColor: Colors.white,
                   shape: const StadiumBorder(),
-                  elevation: 0,
+                  elevation: 5,
                 ),
+
                 child: const Text(
                   '보행자용',
                   style: TextStyle(
