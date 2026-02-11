@@ -131,7 +131,7 @@ class _CarState extends State<Car> {
 
             TextField(
               controller: carNameController,
-              decoration: _inputDecoration('소유 차량 모델명'),
+              decoration: _inputDecoration('소유 차량 모델'),
             ),
 
 
@@ -148,7 +148,7 @@ class _CarState extends State<Car> {
 
             _sectionTitle('차량 크기'),
             _selectRow(
-              ['소형', '중형', '대형'],
+              ['경차', '소형', '중형', '대형'],
               carSize,
                   (value) => setState(() => carSize = value),
             ),
@@ -212,7 +212,7 @@ class _CarState extends State<Car> {
       padding: const EdgeInsets.only(bottom: 10),
       child: Text(
         title,
-        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        style: const TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
       ),
     );
   }

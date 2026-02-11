@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:on_gil/driver/menu/info/mycar/car.dart';
 
 class Edit extends StatefulWidget {
   const Edit({super.key});
@@ -12,10 +13,17 @@ class _EditCar extends State<Edit> {
   late TextEditingController carNameController;
   late TextEditingController carNumberController;
   late TextEditingController carTypeController;
+  late TextEditingController alertDistanceController;
+  late TextEditingController carSizeController;
+  bool isLoading = true;
+
 
   String carName = '모델명을 등록해주세요.';
   String carNumber = '차량번호를 등록해주세요.';
   String carType = '화물차';
+  String alertDistance = '설정되지 않음';
+  String carSize = '설정되지 않음';
+
 
   @override
   void initState() {
@@ -23,19 +31,31 @@ class _EditCar extends State<Edit> {
     carNameController = TextEditingController();
     carNumberController = TextEditingController();
     carTypeController = TextEditingController();
+    alertDistanceController = TextEditingController();
+    carSizeController = TextEditingController();
     _loadCarInfo();
   }
 
   Future<void> _loadCarInfo() async {
+    await Future.delayed(const Duration(seconds: 2));
+
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       carName = prefs.getString('car_name') ?? carName;
       carNumber = prefs.getString('car_number') ?? carNumber;
       carType = prefs.getString('car_type') ?? carType;
+      alertDistance = prefs.getString('alert_distance') ?? alertDistance;
+      carSize = prefs.getString('car_size') ?? carSize;
+
 
       carNameController.text = carName;
       carNumberController.text = carNumber;
       carTypeController.text = carType;
+      alertDistanceController.text = alertDistance;
+      carSizeController.text = carSize;
+      isLoading = false;
+
+
     });
   }
 
@@ -44,11 +64,16 @@ class _EditCar extends State<Edit> {
     await prefs.setString('car_name', carNameController.text);
     await prefs.setString('car_number', carNumberController.text);
     await prefs.setString('car_type', carTypeController.text);
+    await prefs.setString('alert_distance', alertDistanceController.text);
+    await prefs.setString('car_size', carSizeController.text);
+
 
     setState(() {
       carName = carNameController.text;
       carNumber = carNumberController.text;
       carType = carTypeController.text;
+      alertDistance = alertDistanceController.text;
+      carSize = carSizeController.text;
     });
   }
 
@@ -57,6 +82,8 @@ class _EditCar extends State<Edit> {
     carNameController.dispose();
     carNumberController.dispose();
     carTypeController.dispose();
+    alertDistanceController.dispose();
+    carSizeController.dispose();
     super.dispose();
   }
 
@@ -78,17 +105,24 @@ class _EditCar extends State<Edit> {
             color: Color(0xFFFFC107),
             fontSize: 26,
             fontWeight: FontWeight.bold,
+            fontFamily: 'Inter'
           ),
         ),
       ),
-      body: Padding(
+      body: isLoading
+      ? const Center(
+      child: CircularProgressIndicator(
+      color: Color(0xFFFFC107),
+    ),
+    )
+        : Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 10),
             const Text(
-              '내 차량 목록',
+              '내 차량',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900),
             ),
             const SizedBox(height: 20),
@@ -187,10 +221,10 @@ class _EditCar extends State<Edit> {
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                _editRow('차종', carTypeController),
-                const SizedBox(height: 12),
-                _editRow('모델명', carNameController),
-                const SizedBox(height: 12),
+                _editRow('차량 유형', carTypeController),
+                const SizedBox(height: 8),
+                _editRow('차량 모델', carNameController),
+                const SizedBox(height: 8),
                 _editRow('차량 번호', carNumberController),
               ],
             ),
@@ -199,7 +233,10 @@ class _EditCar extends State<Edit> {
                 onPressed: () => Navigator.pop(context),
                 child: const Text(
                   '취소',
-                  style: TextStyle(color: Colors.black, fontSize: 13),
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 15
+                  ),
                 ),
               ),
               TextButton(
@@ -211,8 +248,7 @@ class _EditCar extends State<Edit> {
                   '저장',
                   style: TextStyle(
                     color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 13,
+                    fontSize: 15,
                   ),
                 ),
               ),
@@ -226,12 +262,12 @@ class _EditCar extends State<Edit> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         SizedBox(
-          width: 70,
+          width: 80,
           child: Text(
             label,
             style: const TextStyle(
               color: Colors.black,
-              fontSize: 13,
+              fontSize: 15,
             ),
           ),
         ),
@@ -269,11 +305,15 @@ class _EditCar extends State<Edit> {
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                _detailRow('차종', carType),
-                const SizedBox(height: 12),
-                _detailRow('모델명', carName),
-                const SizedBox(height: 12),
+                _detailRow('차량 유형', carType),
+                const SizedBox(height: 8),
+                _detailRow('차량 모델', carName),
+                const SizedBox(height: 8),
                 _detailRow('차량 번호', carNumber),
+                const SizedBox(height: 8),
+                _detailRow('차량 크기', carSize),
+                const SizedBox(height: 8),
+                _detailRow('위험 알람 거리', alertDistance),
               ],
             ),
             actions: [
@@ -283,7 +323,7 @@ class _EditCar extends State<Edit> {
                   '닫기',
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: 13,
+                    fontSize: 15,
                   ),
                 ),
               ),
@@ -297,12 +337,12 @@ class _EditCar extends State<Edit> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          width: 70,
+          width: 100,
           child: Text(
             label,
             style: const TextStyle(
               color: Colors.black,
-              fontSize: 13,
+              fontSize: 15,
             ),
           ),
         ),
@@ -310,7 +350,7 @@ class _EditCar extends State<Edit> {
           child: Text(
             value,
             style: const TextStyle(
-              fontSize: 15,
+              fontSize: 16,
               fontWeight: FontWeight.w600,
               color: Colors.black,
             ),

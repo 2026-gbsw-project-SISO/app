@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:on_gil/driver/menu/info/edit/MyInfoEdit.dart';
+import 'package:on_gil/driver/menu/info/edit/edit.dart';
 import 'package:on_gil/driver/menu/info/mycar/Car.dart';
 
 
@@ -57,7 +57,7 @@ class Infom extends StatelessWidget {
               const SizedBox(height: 30),
 
               _menuButton(
-                '내 정보 수정',
+                '내 차량',
                 onTap: () {
                   Navigator.push(
                     context,

@@ -1,7 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
-class Policy extends StatelessWidget {
+
+class Policy extends StatefulWidget {
   const Policy({super.key});
+
+  @override
+  State<Policy> createState() => _PolicyState();
+}
+
+class _PolicyState extends State<Policy> {
+  String appVersion = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadVersion();
+  }
+
+  Future<void> _loadVersion() async {
+    final info = await PackageInfo.fromPlatform();
+    setState(() {
+      appVersion = info.version;
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -53,17 +76,19 @@ class Policy extends StatelessWidget {
                     width: 60,
                     height: 60,
                     decoration: BoxDecoration(
-                      color: Colors.grey.shade300,
+                      color: Colors.grey.shade200,
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Center(
-                      child: Image.asset('SISO.png')
+                      child: Image.asset('assets/smallSISO.png')
                     ),
                   ),
+
                   const SizedBox(width: 16),
+
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: [
                       Text(
                         'On-Gil',
                         style: TextStyle(
@@ -82,8 +107,8 @@ class Policy extends StatelessWidget {
                       ),
                       SizedBox(height: 4),
                       Text(
-                        '버전 X.X.X',
-                        style: TextStyle(fontSize: 12, color: Colors.grey)
+                          '버전 $appVersion',
+                          style: TextStyle(fontSize: 12, color: Colors.grey)
                       ),
                     ],
                   ),
@@ -97,6 +122,7 @@ class Policy extends StatelessWidget {
               '앱 정보 및 정책',
               style: TextStyle(
                 color: mainColor,
+                fontSize: 15,
                 fontWeight: FontWeight.bold,
                 fontFamily: 'Inter',
               ),
@@ -143,7 +169,14 @@ class Policy extends StatelessWidget {
       children: [
         ListTile(
           leading: Icon(icon, color: Color(0xFFFFB703)),
-          title: Text(title),
+          title: Text(
+            title,
+            style: const TextStyle(
+              fontFamily: 'Inter',
+              fontWeight: FontWeight.w600,
+            )
+
+          ),
           trailing: const Icon(Icons.chevron_right),
           onTap: onTap,
         ),
