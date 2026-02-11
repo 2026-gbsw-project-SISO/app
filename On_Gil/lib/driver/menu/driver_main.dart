@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:on_gil/driver/menu/background.dart';
-import 'package:on_gil/driver/menu/info/edit/MyInfoEdit.dart';
 import 'package:on_gil/driver/menu/info/infom.dart';
 import 'package:on_gil/driver/menu/policy/policy.dart';
 
@@ -29,7 +28,7 @@ class DMain extends StatelessWidget {
             fontSize: 26,
           ),
         ),
-        centerTitle: true, // 🔥 Bground랑 동일
+        centerTitle: true,
         actions: [
           IconButton(
             icon: const Icon(Icons.menu, color: Colors.black),
@@ -44,7 +43,7 @@ class DMain extends StatelessWidget {
             children: [
               const SizedBox(height: 20),
 
-              // ===== 메뉴 버튼 =====
+
               _menuButton(
                 '백그라운드',
                 onTap: () {

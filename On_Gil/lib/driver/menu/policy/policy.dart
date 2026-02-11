@@ -5,7 +5,7 @@ class Policy extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const mainColor = Color(0xFFFFB703); // 노랑 포인트 컬러
+    const mainColor = Color(0xFFFFB703);
     const bgColor = Color(0xFFF7F4ED);
 
     return Scaffold(
@@ -33,7 +33,7 @@ class Policy extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // ===== 앱 카드 =====
+
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -93,7 +93,6 @@ class Policy extends StatelessWidget {
 
             const SizedBox(height: 24),
 
-            // ===== 섹션 제목 =====
             const Text(
               '앱 정보 및 정책',
               style: TextStyle(
@@ -104,7 +103,6 @@ class Policy extends StatelessWidget {
             ),
             const SizedBox(height: 8),
 
-            // ===== 메뉴 리스트 =====
             _menuItem(
               icon: Icons.lock_outline,
               title: '개인 정보 및 정책',
@@ -136,7 +134,6 @@ class Policy extends StatelessWidget {
     );
   }
 
-  // ===== 메뉴 아이템 위젯 =====
   static Widget _menuItem({
     required IconData icon,
     required String title,

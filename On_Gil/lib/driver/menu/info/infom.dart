@@ -28,7 +28,7 @@ class Infom extends StatelessWidget {
             fontSize: 26,
           ),
         ),
-        centerTitle: true, // 🔥 Bground랑 동일
+        centerTitle: true,
         actions: [
           IconButton(
             icon: const Icon(Icons.menu, color: Colors.black),
@@ -43,7 +43,6 @@ class Infom extends StatelessWidget {
             children: [
               const SizedBox(height: 20),
 
-              // ===== 메뉴 버튼 =====
               _menuButton(
                 '내 차량 등록',
                 onTap: () {
@@ -84,7 +83,6 @@ class Infom extends StatelessWidget {
     );
   }
 
-  // ===== 공통 메뉴 버튼 =====
   Widget _menuButton(String text, {VoidCallback? onTap}) {
     return SizedBox(
       width: double.infinity,

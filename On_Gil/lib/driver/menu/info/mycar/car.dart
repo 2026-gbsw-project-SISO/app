@@ -25,7 +25,6 @@ class _CarState extends State<Car> {
     _loadCarInfo();
   }
 
-  // 🔹 불러오기
   Future<void> _loadCarInfo() async {
     final prefs = await SharedPreferences.getInstance();
 
@@ -40,7 +39,6 @@ class _CarState extends State<Car> {
     });
   }
 
-  // 🔹 저장
   Future<void> _saveCarInfo() async {
     final prefs = await SharedPreferences.getInstance();
 
@@ -124,7 +122,6 @@ class _CarState extends State<Car> {
             ),
             const SizedBox(height: 20),
 
-            // ✅ 추가된 텍스트 필드
             TextField(
               controller: carNumberController,
               decoration: _inputDecoration('소유 차량 번호'),
@@ -210,7 +207,6 @@ class _CarState extends State<Car> {
     );
   }
 
-  // ===== 공통 UI =====
   Widget _sectionTitle(String title) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),

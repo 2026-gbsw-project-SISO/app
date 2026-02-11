@@ -110,13 +110,11 @@ class _EditCar extends State<Edit> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
 
-          /// 🔹 차종 (화물차)
           Text(
             carType,
             style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
 
-          /// 🔹 여기!! 화물차 밑 작은 글씨
           const SizedBox(height: 4),
           Text(
             '$carName · $carNumber',
@@ -172,8 +170,7 @@ class _EditCar extends State<Edit> {
       );
 
 
-  /// 🔹 상세 정보 보기 (읽기 전용)
-  /// 🔹 수정 다이얼로그 (상세 정보 UI와 동일한 스타일)
+
   void _showEditDialog() {
     showDialog(
       context: context,
@@ -256,7 +253,6 @@ class _EditCar extends State<Edit> {
     );
   }
 
-  /// 🔹 상세 정보 보기 (읽기 전용)
   void _showDetailDialog() {
     showDialog(
       context: context,

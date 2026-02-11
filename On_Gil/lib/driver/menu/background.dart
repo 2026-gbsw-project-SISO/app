@@ -33,7 +33,7 @@ class Bground extends StatelessWidget {
       ),
         body: Center(
           child: Transform.translate(
-            offset: const Offset(0, -40), // ← 여기! 마이너스면 위로
+            offset: const Offset(0, -40),
             child: Container(
           width: 260,
           height: 130,
