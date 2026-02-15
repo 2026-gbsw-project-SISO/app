@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:on_gil/driver/menu/policy/location.dart';
+import 'package:on_gil/driver/menu/policy/privacy.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 
@@ -65,7 +67,7 @@ class _PolicyState extends State<Policy> {
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.08),
-                    blurRadius: 10,
+                    blurRadius: 7,
                     offset: const Offset(0, 4),
                   ),
                 ],
@@ -132,12 +134,26 @@ class _PolicyState extends State<Policy> {
             _menuItem(
               icon: Icons.lock_outline,
               title: '개인 정보 및 정책',
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const PrivacyPage(),
+                  ),
+                );
+              },
             ),
             _menuItem(
               icon: Icons.location_on_outlined,
               title: '위치 정보 안내',
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const LocationPage(),
+                  ),
+                );
+              },
             ),
             _menuItem(
               icon: Icons.warning_amber_outlined,

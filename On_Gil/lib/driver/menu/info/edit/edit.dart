@@ -37,7 +37,7 @@ class _EditCar extends State<Edit> {
   }
 
   Future<void> _loadCarInfo() async {
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 1));
 
     final prefs = await SharedPreferences.getInstance();
     setState(() {
