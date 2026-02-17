@@ -8,12 +8,12 @@ class WalkerMain extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFF0EEE9),
       appBar: AppBar(
-        backgroundColor: const Color(0xFFF0EEE9), // AppBar 배경색
-        elevation: 0, // 그림자 없애기
+        backgroundColor: const Color(0xFFF0EEE9),
+        elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_outlined, color: Colors.black), // 뒤로가기 화살표
           onPressed: () {
-            Navigator.pop(context); // 이전 화면으로 돌아가기
+            Navigator.pop(context);
           },
         ),
       ),

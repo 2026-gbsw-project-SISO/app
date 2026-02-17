@@ -6,9 +6,7 @@ class Bground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF4F2ED),
       appBar: AppBar(
-        backgroundColor: const Color(0xFFF4F2ED),
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
@@ -24,12 +22,6 @@ class Bground extends StatelessWidget {
           ),
         ),
         centerTitle: true,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.menu, color: Colors.black),
-            onPressed: () {},
-          ),
-        ],
       ),
         body: Center(
           child: Transform.translate(

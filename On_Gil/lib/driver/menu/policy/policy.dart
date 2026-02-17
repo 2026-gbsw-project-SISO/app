@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:on_gil/driver/menu/policy/Notification.dart';
+import 'package:on_gil/driver/menu/policy/driver_policy.dart';
 import 'package:on_gil/driver/menu/policy/location.dart';
 import 'package:on_gil/driver/menu/policy/privacy.dart';
+import 'package:on_gil/driver/menu/policy/terms.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 
@@ -30,13 +33,10 @@ class _PolicyState extends State<Policy> {
 
   @override
   Widget build(BuildContext context) {
-    const mainColor = Color(0xFFFFB703);
-    const bgColor = Color(0xFFF7F4ED);
+    bool isLightMode = Theme.of(context).brightness == Brightness.light;
 
     return Scaffold(
-      backgroundColor: bgColor,
       appBar: AppBar(
-        backgroundColor: bgColor,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
@@ -46,7 +46,7 @@ class _PolicyState extends State<Policy> {
         title: const Text(
           'On-Gil',
           style: TextStyle(
-            color: mainColor,
+            color: Color(0xFFFFB703),
             fontFamily: 'Inter',
             fontWeight: FontWeight.bold,
             fontSize: 26,
@@ -60,9 +60,10 @@ class _PolicyState extends State<Policy> {
           children: [
 
             Container(
+
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: isLightMode ? Colors.white : Theme.of(context).cardColor,
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
@@ -96,7 +97,7 @@ class _PolicyState extends State<Policy> {
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: mainColor,
+                          color: Color(0xFFFFB703),
                           fontFamily: 'Inter',
 
                         ),
@@ -104,7 +105,9 @@ class _PolicyState extends State<Policy> {
                       SizedBox(height: 4),
                       Text(
                         'GPS 기반 AI안전 보험·운전 보조 앱',
-                        style: TextStyle(fontSize: 13),
+                        style: TextStyle(
+                            fontSize: 13,
+                        ),
 
                       ),
                       SizedBox(height: 4),
@@ -123,7 +126,7 @@ class _PolicyState extends State<Policy> {
             const Text(
               '앱 정보 및 정책',
               style: TextStyle(
-                color: mainColor,
+                color: Color(0xFFFFB703),
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
                 fontFamily: 'Inter',
@@ -158,17 +161,38 @@ class _PolicyState extends State<Policy> {
             _menuItem(
               icon: Icons.warning_amber_outlined,
               title: '운전자 책임 고지',
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const driverPage(),
+                  ),
+                );
+              },
             ),
             _menuItem(
               icon: Icons.notifications_none,
               title: '알림 정확성 안내',
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const NotificationPage(),
+                  ),
+                );
+              },
             ),
             _menuItem(
               icon: Icons.description_outlined,
               title: '이용 약관',
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const TermsPage(),
+                  ),
+                );
+              },
             ),
           ],
         ),

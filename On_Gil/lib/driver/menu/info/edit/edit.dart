@@ -90,9 +90,7 @@ class _EditCar extends State<Edit> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF4F2ED),
       appBar: AppBar(
-        backgroundColor: const Color(0xFFF4F2ED),
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
@@ -134,16 +132,17 @@ class _EditCar extends State<Edit> {
   }
 
   Widget _carCard() {
+    final isLightMode = Theme.of(context).brightness == Brightness.light;
+
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isLightMode ? Colors.white : Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(18),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
           Text(
             carType,
             style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -159,6 +158,7 @@ class _EditCar extends State<Edit> {
           ),
 
           const SizedBox(height: 14),
+
           Row(
             children: [
               Expanded(
@@ -181,6 +181,7 @@ class _EditCar extends State<Edit> {
     );
   }
 
+
   Widget _grayButton(String text) =>
       Container(
         height: 44,
@@ -189,7 +190,13 @@ class _EditCar extends State<Edit> {
           color: const Color(0xFFE0E0E0),
           borderRadius: BorderRadius.circular(22),
         ),
-        child: Text(text, style: const TextStyle(fontWeight: FontWeight.bold)),
+        child: Text(
+            text,
+            style: const TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold
+            )
+        ),
       );
 
   Widget _yellowButton(String text) =>
@@ -200,7 +207,13 @@ class _EditCar extends State<Edit> {
           color: const Color(0xFFFFC107),
           borderRadius: BorderRadius.circular(22),
         ),
-        child: Text(text, style: const TextStyle(fontWeight: FontWeight.bold)),
+        child: Text(
+            text,
+            style: const TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold
+            )
+        ),
       );
 
 
@@ -210,14 +223,23 @@ class _EditCar extends State<Edit> {
       context: context,
       builder: (_) =>
           AlertDialog(
-            backgroundColor: const Color(0xFFF4F2ED),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
+            backgroundColor: Colors.white,
+            titleTextStyle: TextStyle(
+              color: Colors.black,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
             ),
-            title: const Text(
+            contentTextStyle: TextStyle(
+              color: Colors.black,
+          ),
+            title: Text(
               '차량 정보 수정',
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
             ),
+
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -277,11 +299,14 @@ class _EditCar extends State<Edit> {
             style: const TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w600,
+              color: Colors.black,
             ),
+            cursorColor: Colors.black,
             decoration: const InputDecoration(
               isDense: true,
               border: InputBorder.none,
               hintText: '',
+              hintStyle: TextStyle(color: Colors.black38),
             ),
           ),
         ),
@@ -290,17 +315,24 @@ class _EditCar extends State<Edit> {
   }
 
   void _showDetailDialog() {
-    showDialog(
-      context: context,
+    showDialog(context: context,
       builder: (_) =>
           AlertDialog(
-            backgroundColor: const Color(0xFFF4F2ED),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
+            backgroundColor: Colors.white,
+            titleTextStyle: TextStyle(
+              color: Colors.black,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
             ),
-            title: const Text(
+            contentTextStyle: TextStyle(
+              color: Colors.black,
+            ),
+            title: Text(
               '차량 상세 정보',
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
             ),
             content: Column(
               mainAxisSize: MainAxisSize.min,

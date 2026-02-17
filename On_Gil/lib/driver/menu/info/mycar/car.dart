@@ -61,11 +61,11 @@ class _CarState extends State<Car> {
     super.dispose();
   }
 
-  InputDecoration _inputDecoration(String label) {
+  InputDecoration _inputDecoration(BuildContext context, String label) {
     return InputDecoration(
       labelText: label,
       filled: true,
-      fillColor: Colors.white,
+      fillColor: Theme.of(context).cardColor,
       contentPadding: const EdgeInsets.symmetric(
         horizontal: 16,
         vertical: 14,
@@ -92,9 +92,7 @@ class _CarState extends State<Car> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF4F2ED),
       appBar: AppBar(
-        backgroundColor: const Color(0xFFF4F2ED),
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
@@ -124,14 +122,24 @@ class _CarState extends State<Car> {
 
             TextField(
               controller: carNumberController,
-              decoration: _inputDecoration('소유 차량 번호'),
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onSurface,
+                fontWeight: FontWeight.w600,
+              ),
+              decoration: _inputDecoration(context, '소유 차량 번호'),
             ),
+
+
 
             const SizedBox(height: 10),
 
             TextField(
               controller: carNameController,
-              decoration: _inputDecoration('소유 차량 모델'),
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onSurface,
+                fontWeight: FontWeight.w600,
+              ),
+              decoration: _inputDecoration(context, '소유 차량 모델'),
             ),
 
 
@@ -185,7 +193,6 @@ class _CarState extends State<Car> {
               child: ElevatedButton(
                 onPressed: _saveCarInfo,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFFFD25A),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(14),
                   ),

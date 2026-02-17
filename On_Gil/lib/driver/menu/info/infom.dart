@@ -9,9 +9,7 @@ class Infom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF0EEE9),
       appBar: AppBar(
-        backgroundColor: const Color(0xFFF0EEE9),
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_outlined, color: Colors.black),
@@ -29,12 +27,6 @@ class Infom extends StatelessWidget {
           ),
         ),
         centerTitle: true,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.menu, color: Colors.black),
-            onPressed: () {},
-          ),
-        ],
       ),
       body: SafeArea(
         child: Padding(
@@ -69,13 +61,6 @@ class Infom extends StatelessWidget {
 
               ),
               const SizedBox(height: 30),
-
-              _menuButton(
-                  '이용 요약'
-          ),
-              const SizedBox(height: 30),
-
-              _menuButton('설정'),
             ],
           ),
         ),
@@ -90,10 +75,6 @@ class Infom extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onTap ?? () {},
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.white,
-          foregroundColor: const Color(0xFFFFC30B),
-          disabledBackgroundColor: Colors.white,
-          disabledForegroundColor: const Color(0xFFFFC30B),
           elevation: 3,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(18),

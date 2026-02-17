@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class PrivacyPage extends StatelessWidget {
-  const PrivacyPage({super.key});
+class driverPage extends StatelessWidget {
+  const driverPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +18,10 @@ class PrivacyPage extends StatelessWidget {
         title: const Text(
           'On-Gil',
           style: TextStyle(
-            color: Color(0xFFFFB300),
-            fontSize: 28,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'Inter'
+              color: Color(0xFFFFB300),
+              fontSize: 28,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Inter'
           ),
         ),
       ),
@@ -30,21 +30,21 @@ class PrivacyPage extends StatelessWidget {
         child: Column(
           children: const [
             InfoCard(
-              title: '개인정보 수집 여부',
+              title: '서비스 성격',
               content:
-              '본 서비스는 회원가입 및 로그인을 요구하지 않으며, 이름, 전화번호, 이메일 등 개인을 식별할 수 있는 정보는 수집하지 않습니다.',
+              '본 서비스는 기존 교통 신호, 도로 시설, 횡단보도 등을 관리하거나 제어하지 않습니다. AI 기반 위험 인지 및 안내를 제공하는 운전자 보조 시스템입니다.',
             ),
             SizedBox(height: 20),
             InfoCard(
-              title: '개인정보 이용 목적',
+              title: '운전 책임 주체',
               content:
-              '수집된 정보는 보행자 및 운전자의 위험 구간 \n인지 실시간 안전 알림 제공, 위험 상황 분석 및 안내 제공 목적에만 사용됩니다.',
+              '실제 운전 판단과 차량 조작에 대한 모든 책임은 운전자 본인에게 있습니다. 본 서비스의 안내는 운전자의 판단을 대체하지 않습니다.',
             ),
             SizedBox(height: 20),
             InfoCard(
-              title: '개인정보 저장 및 처리 방식',
+              title: '시스템 한계 및 면책',
               content:
-              '모든 데이터는 사용자 기기 내부에만 저장되며, \n외부 서버로 전송하거나 제 3자에게 제공하지 \n않습니다. 앱 삭제 또는 설정을 통해 삭제할 수 \n있습니다.',
+              'GPS 오류, 인식 지연, 환경 요인 등으로 인해 안내가 지연되거나 부정확할 수 있습니다. 서비스 이용 중 발생하는 상황에 대해 최종 책임은 사용자에게 있습니다.',
             ),
           ],
         ),
@@ -87,19 +87,19 @@ class InfoCard extends StatelessWidget {
           Text(
             title,
             style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFFFFB300),
-              fontFamily: 'Inter'
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFFFFB300),
+                fontFamily: 'Inter'
             ),
           ),
           const SizedBox(height: 7),
           Text(
             content,
             style: const TextStyle(
-              fontSize: 16,
-              color: Color(0xFFFFB300),
-              height: 1.5,
+                fontSize: 16,
+                color: Color(0xFFFFB300),
+                height: 1.5,
                 fontFamily: 'Inter'
             ),
           ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class PrivacyPage extends StatelessWidget {
-  const PrivacyPage({super.key});
+class NotificationPage extends StatelessWidget {
+  const NotificationPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +18,10 @@ class PrivacyPage extends StatelessWidget {
         title: const Text(
           'On-Gil',
           style: TextStyle(
-            color: Color(0xFFFFB300),
-            fontSize: 28,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'Inter'
+              color: Color(0xFFFFB300),
+              fontSize: 28,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Inter'
           ),
         ),
       ),
@@ -30,21 +30,21 @@ class PrivacyPage extends StatelessWidget {
         child: Column(
           children: const [
             InfoCard(
-              title: '개인정보 수집 여부',
+              title: '알림 제공 목적',
               content:
-              '본 서비스는 회원가입 및 로그인을 요구하지 않으며, 이름, 전화번호, 이메일 등 개인을 식별할 수 있는 정보는 수집하지 않습니다.',
+              '본 서비스의 알림은 위험 상황에 대한 사전 인지 및 참고용 안내입니다. 알림은 사용자의 판단을 보조하기 위한 정보 제공 목적입니다.',
             ),
             SizedBox(height: 20),
             InfoCard(
-              title: '개인정보 이용 목적',
+              title: '정확성의 한계',
               content:
-              '수집된 정보는 보행자 및 운전자의 위험 구간 \n인지 실시간 안전 알림 제공, 위험 상황 분석 및 안내 제공 목적에만 사용됩니다.',
+              '위치 정보, 센서, 네트워크 상태에 따라 알림이 지연되거나 누락될 수 있습니다. 모든 위험 상황을 완전히 감지하거나 안내하지 못할 수 있습니다.',
             ),
             SizedBox(height: 20),
             InfoCard(
-              title: '개인정보 저장 및 처리 방식',
+              title: '책임 범위',
               content:
-              '모든 데이터는 사용자 기기 내부에만 저장되며, \n외부 서버로 전송하거나 제 3자에게 제공하지 \n않습니다. 앱 삭제 또는 설정을 통해 삭제할 수 \n있습니다.',
+              '알림의 유무 또는 정확성과 관계없이 실제 판단과 행동에 대한 책임은 사용자에게 있습니다. 본 서비스는 사고 예방을 보장하지 않습니다.',
             ),
           ],
         ),
@@ -67,7 +67,7 @@ class InfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isLightMode = Theme.of(context).brightness == Brightness.light;
     return Container(
-      height: 180,
+      height: 160,
       width: 400,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -87,19 +87,19 @@ class InfoCard extends StatelessWidget {
           Text(
             title,
             style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFFFFB300),
-              fontFamily: 'Inter'
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFFFFB300),
+                fontFamily: 'Inter'
             ),
           ),
           const SizedBox(height: 7),
           Text(
             content,
             style: const TextStyle(
-              fontSize: 16,
-              color: Color(0xFFFFB300),
-              height: 1.5,
+                fontSize: 16,
+                color: Color(0xFFFFB300),
+                height: 1.5,
                 fontFamily: 'Inter'
             ),
           ),

@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:on_gil/driver/menu/background.dart';
-import 'package:on_gil/driver/menu/info/infom.dart';
-import 'package:on_gil/driver/menu/policy/policy.dart';
-import 'package:on_gil/driver/menu/set/set.dart';
+import 'package:on_gil/driver/menu/set/mode.dart';
 
-class DMain extends StatelessWidget {
-  const DMain({super.key});
+class SetPage extends StatelessWidget {
+  const SetPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +18,9 @@ class DMain extends StatelessWidget {
         title: const Text(
           'On-Gil',
           style: TextStyle(
-            color: Color(0xFFFFC107),
             fontWeight: FontWeight.bold,
             fontFamily: 'Inter',
+            color: Color(0xFFFFB300),
             fontSize: 26,
           ),
         ),
@@ -38,27 +35,15 @@ class DMain extends StatelessWidget {
 
 
               _menuButton(
-                '백그라운드',
+                '알림 설정',
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const Bground(),
-                    ),
-                  );
                 },
               ),
               const SizedBox(height: 30),
 
               _menuButton(
-                  '내 정보 관리',
+                '사운드 설정',
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const Infom(),
-                    ),
-                  );
                 },
 
 
@@ -66,28 +51,16 @@ class DMain extends StatelessWidget {
               const SizedBox(height: 30),
 
               _menuButton(
-                '정책 및 고지',
+                '모드 전환',
                 onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const Policy(),
+                      builder: (context) => const ModePage(),
                     ),
                   );
                 },
               ),
-              const SizedBox(height: 30),
-
-              _menuButton(
-                  '설정',
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SetPage(),
-                    ),
-                  );
-                },),
             ],
           ),
         ),

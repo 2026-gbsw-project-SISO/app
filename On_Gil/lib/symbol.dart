@@ -45,7 +45,7 @@ class _SymbolPageState extends State<SymbolPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Center(
         child: FadeTransition(
           opacity: _controller,
@@ -57,7 +57,7 @@ class _SymbolPageState extends State<SymbolPage>
               Text(
                 'On-Gil',
                 style: TextStyle(
-                  fontFamily: 'Inter', // pubspec.yaml에 등록한 family 이름
+                  fontFamily: 'Inter',
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),

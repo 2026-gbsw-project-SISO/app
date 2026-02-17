@@ -6,9 +6,7 @@ class LocationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF0EEE9), // 배경색
       appBar: AppBar(
-        backgroundColor: const Color(0xFF0EEE9),
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
@@ -67,12 +65,13 @@ class InfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isLightMode = Theme.of(context).brightness == Brightness.light;
     return Container(
       height: 180,
       width: 400,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isLightMode ? Colors.white : Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(

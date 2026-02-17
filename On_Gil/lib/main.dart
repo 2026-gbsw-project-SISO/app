@@ -2,19 +2,111 @@ import 'package:flutter/material.dart';
 import 'package:on_gil/driver/menu/driver_main.dart';
 import 'package:on_gil/walker/walker_main.dart';
 import 'package:vibration/vibration.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(const OnGilApp());
 }
 
-class OnGilApp extends StatelessWidget {
+class OnGilApp extends StatefulWidget {
   const OnGilApp({super.key});
+
+  static _OnGilAppState? of(BuildContext context) {
+    return context.findAncestorStateOfType<_OnGilAppState>();
+  }
+
+  @override
+  State<OnGilApp> createState() => _OnGilAppState();
+}
+
+class _OnGilAppState extends State<OnGilApp> {
+  ThemeMode _themeMode = ThemeMode.light;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadTheme();
+  }
+
+  void _loadTheme() async {
+    final prefs = await SharedPreferences.getInstance();
+    bool isDark = prefs.getBool('isDarkMode') ?? false;
+
+    setState(() {
+      _themeMode = isDark ? ThemeMode.dark : ThemeMode.light;
+    });
+  }
+
+  void toggleTheme(bool isDark) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isDarkMode', isDark);
+
+    setState(() {
+      _themeMode = isDark ? ThemeMode.dark : ThemeMode.light;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SymbolPage(),
+      color: const Color(0xFFF4F2ED),
+      theme: ThemeData(
+        brightness: Brightness.light,
+        scaffoldBackgroundColor: const Color(0xFFF4F2ED),
+
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.white,
+            foregroundColor: const Color(0xFFFFC30B),
+            elevation: 3,
+            shape: const StadiumBorder(),
+          ),
+        ),
+
+        appBarTheme: const AppBarTheme(
+          backgroundColor: const Color(0xFFF4F2ED),
+          foregroundColor: const Color(0xFFFFC30B),
+          elevation: 0,
+
+      ),
+      ),
+
+      darkTheme: ThemeData.dark().copyWith(
+        scaffoldBackgroundColor: const Color(0xFF292929),
+
+
+        switchTheme: SwitchThemeData(
+          thumbColor: MaterialStateProperty.all(const Color(0xFFFFC30B)),
+          trackColor: MaterialStateProperty.all(const Color(0x55FFC30B)),
+        ),
+
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color(0xFF454545),
+            foregroundColor: const Color(0xFFFFC30B),
+            elevation: 3,
+            shape: const StadiumBorder(),
+          ),
+        ),
+
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color(0xFF292929),
+          foregroundColor: Color(0xFFFFC30B),
+          elevation: 0,
+        ),
+      ),
+
+      builder: (context, child) {
+        return Container(
+          color: Theme.of(context).scaffoldBackgroundColor,
+          child: child,
+        );
+      },
+
+
+      themeMode: _themeMode,
+      home: const SymbolPage(),
     );
   }
 }
@@ -56,7 +148,8 @@ class _SymbolPageState extends State<SymbolPage>
         context,
         MaterialPageRoute(builder: (context) => const MainScreen()),
       );
-    });
+    }
+    );
   }
 
   @override
@@ -68,7 +161,7 @@ class _SymbolPageState extends State<SymbolPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF0EEE9),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Center(
         child: FadeTransition(
           opacity: _fade,
@@ -86,8 +179,6 @@ class _SymbolPageState extends State<SymbolPage>
                   color: Color(0xFFFFC30B),
                 ),
               ),
-
-
               const SizedBox(height: 12),
               const Text(
                 '본 서비스는 교통 시설을 제어하지 않으며,\n AI 기반 주의 안내만 제공합니다.',
@@ -118,7 +209,7 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF0EEE9),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -133,7 +224,6 @@ class MainScreen extends StatelessWidget {
                 letterSpacing: -2.0,
               ),
             ),
-
             const Text(
               'AI기반 보행•운전 안전 도우미',
               style: TextStyle(
@@ -146,7 +236,6 @@ class MainScreen extends StatelessWidget {
             ),
             const SizedBox(height: 15),
 
-            // 운전자용 버튼
             SizedBox(
               width: 250,
               height: 60,
@@ -160,8 +249,8 @@ class MainScreen extends StatelessWidget {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
                   foregroundColor: const Color(0xFFFFC30B),
+                  backgroundColor: Colors.white,
                   shape: const StadiumBorder(),
                   elevation: 5,
                 ),
@@ -176,7 +265,6 @@ class MainScreen extends StatelessWidget {
             ),
             const SizedBox(height: 10),
 
-            // 보행자용 버튼
             SizedBox(
               width: 250,
               height: 60,
@@ -190,12 +278,11 @@ class MainScreen extends StatelessWidget {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFFFC30B),
-                  foregroundColor: Colors.white,
                   shape: const StadiumBorder(),
+                  foregroundColor: Colors.white,
+                  backgroundColor: const Color(0xFFFFC30B),
                   elevation: 5,
                 ),
-
                 child: const Text(
                   '보행자용',
                   style: TextStyle(
