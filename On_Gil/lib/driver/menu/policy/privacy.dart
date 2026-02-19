@@ -71,7 +71,9 @@ class InfoCard extends StatelessWidget {
       width: 400,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: isLightMode ? Colors.white : Theme.of(context).cardColor,
+        color: isLightMode
+            ? Colors.white
+            : const Color(0xFF1D1D1D),
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(

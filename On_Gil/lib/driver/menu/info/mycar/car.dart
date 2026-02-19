@@ -163,27 +163,8 @@ class _CarState extends State<Car> {
 
             const SizedBox(height: 24),
 
-            _sectionTitle('위험 알람 거리'),
-            _selectRow(
-              ['가까움', '보통', '넓음'],
-              alertDistance,
-                  (value) => setState(() => alertDistance = value),
-            ),
 
-            const SizedBox(height: 20),
 
-            Row(
-              children: [
-                Checkbox(
-                  value: isDefaultCar,
-                  activeColor: const Color(0xFFFFC107),
-                  onChanged: (value) {
-                    setState(() => isDefaultCar = value ?? false);
-                  },
-                ),
-                const Text('기본 운전 차량으로 설정'),
-              ],
-            ),
 
             const Spacer(),
 

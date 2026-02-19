@@ -137,8 +137,10 @@ class _EditCar extends State<Edit> {
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: isLightMode ? Colors.white : Theme.of(context).cardColor,
-        borderRadius: BorderRadius.circular(18),
+        color: isLightMode
+      ? Colors.white
+          : const Color(0xFF1D1D1D),
+      borderRadius: BorderRadius.circular(18),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -344,8 +346,6 @@ class _EditCar extends State<Edit> {
                 _detailRow('차량 번호', carNumber),
                 const SizedBox(height: 8),
                 _detailRow('차량 크기', carSize),
-                const SizedBox(height: 8),
-                _detailRow('위험 알람 거리', alertDistance),
               ],
             ),
             actions: [

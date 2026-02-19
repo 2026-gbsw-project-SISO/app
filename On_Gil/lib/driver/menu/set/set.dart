@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:on_gil/driver/menu/set/mode.dart';
+import 'package:on_gil/driver/menu/set/sound.dart';
 
 class SetPage extends StatelessWidget {
   const SetPage({super.key});
@@ -35,15 +36,14 @@ class SetPage extends StatelessWidget {
 
 
               _menuButton(
-                '알림 설정',
+                '알림 및 경고 거리 설정',
                 onTap: () {
-                },
-              ),
-              const SizedBox(height: 30),
-
-              _menuButton(
-                '사운드 설정',
-                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SoundSettingPage(),
+                    ),
+                  );
                 },
 
 

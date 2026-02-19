@@ -23,7 +23,6 @@ class _SymbolPageState extends State<SymbolPage>
 
     _controller.forward();
 
-    // ⏱ 2초 후 첫 화면으로 이동
     Future.delayed(const Duration(seconds: 2), () {
       if (!mounted) return;
 

@@ -63,8 +63,9 @@ class _PolicyState extends State<Policy> {
 
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: isLightMode ? Colors.white : Theme.of(context).cardColor,
-                borderRadius: BorderRadius.circular(16),
+                color: isLightMode
+                    ? Colors.white
+                    : const Color(0xFF1D1D1D),                borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.08),

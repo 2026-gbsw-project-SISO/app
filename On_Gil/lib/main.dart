@@ -3,6 +3,10 @@ import 'package:on_gil/driver/menu/driver_main.dart';
 import 'package:on_gil/walker/walker_main.dart';
 import 'package:vibration/vibration.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:audioplayers/audioplayers.dart';
+
+
 
 void main() {
   runApp(const OnGilApp());
@@ -55,6 +59,11 @@ class _OnGilAppState extends State<OnGilApp> {
         brightness: Brightness.light,
         scaffoldBackgroundColor: const Color(0xFFF4F2ED),
 
+        switchTheme: SwitchThemeData(
+          thumbColor: MaterialStateProperty.all(const Color(0xFFFFC30B)),
+          trackColor: MaterialStateProperty.all(const Color(0x55FFC30B)),
+        ),
+
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.white,
@@ -65,17 +74,15 @@ class _OnGilAppState extends State<OnGilApp> {
         ),
 
         appBarTheme: const AppBarTheme(
-          backgroundColor: const Color(0xFFF4F2ED),
-          foregroundColor: const Color(0xFFFFC30B),
+          backgroundColor: Color(0xFFF4F2ED),
+          foregroundColor: Color(0xFFFFC30B),
           elevation: 0,
+        ),
+      ),
 
-      ),
-      ),
 
       darkTheme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: const Color(0xFF292929),
-
-
         switchTheme: SwitchThemeData(
           thumbColor: MaterialStateProperty.all(const Color(0xFFFFC30B)),
           trackColor: MaterialStateProperty.all(const Color(0x55FFC30B)),
@@ -126,6 +133,7 @@ class _SymbolPageState extends State<SymbolPage>
   @override
   void initState() {
     super.initState();
+
 
     _controller = AnimationController(
       vsync: this,
@@ -197,13 +205,120 @@ class _SymbolPageState extends State<SymbolPage>
   }
 }
 
-class MainScreen extends StatelessWidget {
+class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
-  void _playVibration() async {
-    if (await Vibration.hasVibrator() ?? false) {
-      Vibration.vibrate(duration: 100);
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+  Position? _currentPosition;
+
+  double alertDistance = 50;
+
+  double pedestrianLat = 37.4219983;
+  double pedestrianLon = -122.084;
+
+  bool _isInsideAlertZone = false;
+  DateTime? _lastAlertTime;
+
+  final int alertCooldownSeconds = 5;
+
+  final AudioPlayer _audioPlayer = AudioPlayer();
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSettings();
+    _initLocation();
+  }
+
+  Future<void> _loadSettings() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    setState(() {
+      alertDistance = prefs.getDouble('alertDistance') ?? 50;
+
+      if (alertDistance < 10) {
+        alertDistance = 10;
+      }
+    });
+  }
+
+  Future<void> _initLocation() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) return;
+
+    permission = await Geolocator.checkPermission();
+
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) return;
     }
+
+    if (permission == LocationPermission.deniedForever) return;
+
+    Geolocator.getPositionStream().listen((Position position) {
+      _currentPosition = position;
+      _checkDistance();
+    });
+  }
+
+  void _checkDistance() {
+    if (_currentPosition == null) return;
+
+    double distance = Geolocator.distanceBetween(
+      _currentPosition!.latitude,
+      _currentPosition!.longitude,
+      pedestrianLat,
+      pedestrianLon,
+    );
+
+    print("현재 거리: ${distance.toStringAsFixed(2)} m");
+
+    if (distance <= alertDistance) {
+
+      bool canAlert = _lastAlertTime == null ||
+          DateTime.now().difference(_lastAlertTime!).inSeconds >
+              alertCooldownSeconds;
+
+      if (canAlert) {
+        _playSmartSound(distance);
+        _lastAlertTime = DateTime.now();
+        print("경고음 실행");
+      }
+
+      _isInsideAlertZone = true;
+
+    } else {
+      _isInsideAlertZone = false;
+    }
+  }
+
+  void _playSmartSound(double distance) async {
+    double ratio = distance / alertDistance;
+
+    await _audioPlayer.stop();
+
+    if (ratio <= 0.3) {
+      await _audioPlayer.setVolume(1.0);
+    } else if (ratio <= 0.6) {
+      await _audioPlayer.setVolume(0.7);
+    } else {
+      await _audioPlayer.setVolume(0.4);
+    }
+
+    await _audioPlayer.play(AssetSource('alert.wav'));
+  }
+
+  @override
+  void dispose() {
+    _audioPlayer.dispose();
+    super.dispose();
   }
 
   @override
@@ -240,13 +355,15 @@ class MainScreen extends StatelessWidget {
               width: 250,
               height: 60,
               child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
+                onPressed: () async {
+                  await Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => const DMain(),
                     ),
                   );
+
+                  _loadSettings();
                 },
                 style: ElevatedButton.styleFrom(
                   foregroundColor: const Color(0xFFFFC30B),

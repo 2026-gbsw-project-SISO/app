@@ -33,6 +33,9 @@ dependencies:
   flutter:
     sdk: flutter
 
+  geolocator: ^10.1.0
+  audioplayers: ^5.2.1
+
   # The following adds the Cupertino Icons fonts to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
