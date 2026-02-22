@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:on_gil/driver/menu/driver_main.dart';
-import 'package:on_gil/walker/walker_main.dart';
-import 'package:vibration/vibration.dart';
+import 'package:on_gil/walker/manu/walker_main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:audioplayers/audioplayers.dart';
+
 
 
 
@@ -216,22 +217,24 @@ class _MainScreenState extends State<MainScreen> {
   Position? _currentPosition;
 
   double alertDistance = 50;
-
   double pedestrianLat = 37.4219983;
   double pedestrianLon = -122.084;
 
-  bool _isInsideAlertZone = false;
-  DateTime? _lastAlertTime;
+  bool _hasSpoken = false;
+  bool soundEnabled = true;
 
-  final int alertCooldownSeconds = 5;
-
+  final FlutterTts _tts = FlutterTts();
   final AudioPlayer _audioPlayer = AudioPlayer();
 
   @override
   void initState() {
     super.initState();
     _loadSettings();
-    _initLocation();
+
+    _tts.setLanguage("ko-KR");
+    _tts.setSpeechRate(0.5);
+    _tts.setVolume(1.0);
+    _tts.setPitch(1.0);
   }
 
   Future<void> _loadSettings() async {
@@ -239,6 +242,7 @@ class _MainScreenState extends State<MainScreen> {
 
     setState(() {
       alertDistance = prefs.getDouble('alertDistance') ?? 50;
+      soundEnabled = prefs.getBool('soundEnabled') ?? true;
 
       if (alertDistance < 10) {
         alertDistance = 10;
@@ -281,42 +285,31 @@ class _MainScreenState extends State<MainScreen> {
     print("현재 거리: ${distance.toStringAsFixed(2)} m");
 
     if (distance <= alertDistance) {
-
-      bool canAlert = _lastAlertTime == null ||
-          DateTime.now().difference(_lastAlertTime!).inSeconds >
-              alertCooldownSeconds;
-
-      if (canAlert) {
-        _playSmartSound(distance);
-        _lastAlertTime = DateTime.now();
-        print("경고음 실행");
+      if (!_hasSpoken) {
+        _triggerDriverAlert(distance);
+        _hasSpoken = true;
       }
-
-      _isInsideAlertZone = true;
-
     } else {
-      _isInsideAlertZone = false;
+      _hasSpoken = false;
     }
   }
 
-  void _playSmartSound(double distance) async {
-    double ratio = distance / alertDistance;
+  Future<void> _triggerDriverAlert(double distance) async {
+    print("운전자 경고 실행");
 
-    await _audioPlayer.stop();
-
-    if (ratio <= 0.3) {
-      await _audioPlayer.setVolume(1.0);
-    } else if (ratio <= 0.6) {
-      await _audioPlayer.setVolume(0.7);
-    } else {
-      await _audioPlayer.setVolume(0.4);
+    if (soundEnabled) {
+      await _audioPlayer.play(AssetSource('alert.wav'));
     }
 
-    await _audioPlayer.play(AssetSource('alert.wav'));
+    await _tts.stop();
+    await _tts.speak(
+        "${distance.toStringAsFixed(0)}미터 앞에 보행자가 있습니다. 주의하세요."
+    );
   }
 
   @override
   void dispose() {
+    _tts.stop();
     _audioPlayer.dispose();
     super.dispose();
   }
@@ -356,6 +349,7 @@ class _MainScreenState extends State<MainScreen> {
               height: 60,
               child: ElevatedButton(
                 onPressed: () async {
+                  await _initLocation();
                   await Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -380,6 +374,7 @@ class _MainScreenState extends State<MainScreen> {
                 ),
               ),
             ),
+
             const SizedBox(height: 10),
 
             SizedBox(
@@ -390,7 +385,7 @@ class _MainScreenState extends State<MainScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => WalkerMain(),
+                      builder: (context) => WMain(),
                     ),
                   );
                 },

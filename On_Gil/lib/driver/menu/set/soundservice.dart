@@ -4,26 +4,29 @@ import 'package:vibration/vibration.dart';
 class SoundService {
   final AudioPlayer _player = AudioPlayer();
 
-  bool soundEnabled = true;
-  bool vibrationEnabled = true;
+  bool _soundEnabled = true;
+  bool _vibrationEnabled = true;
+
+  void setSound(bool enabled) {
+    _soundEnabled = enabled;
+
+    if (!enabled) {
+      _player.stop();
+    }
+  }
+
+  void setVibration(bool enabled) {
+    _vibrationEnabled = enabled;
+  }
 
   Future<void> playAlert() async {
-    if (soundEnabled) {
-      await _player.play(AssetSource('alert.mp3'));
+    if (_soundEnabled) {
+      await _player.play(AssetSource('alert.wav'));
     }
 
-    if (vibrationEnabled) {
-      if (await Vibration.hasVibrator() ?? false) {
-        Vibration.vibrate(duration: 1000);
-      }
+    if (_vibrationEnabled &&
+        (await Vibration.hasVibrator() ?? false)) {
+      Vibration.vibrate(duration: 300);
     }
-  }
-
-  void setSound(bool value) {
-    soundEnabled = value;
-  }
-
-  void setVibration(bool value) {
-    vibrationEnabled = value;
   }
 }

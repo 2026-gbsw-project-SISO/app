@@ -92,27 +92,6 @@ class _SoundSettingPageState extends State<SoundSettingPage> {
             ),
           ),
 
-          ListTile(
-            title: const Text(
-              "진동 사용",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Inter',
-              ),
-            ),
-            trailing: Switch(
-              value: vibrationEnabled,
-              onChanged: (value) async {
-                setState(() {
-                  vibrationEnabled = value;
-                  _soundService.setVibration(value);
-                });
-                await _saveSettings();
-              },
-            ),
-          ),
-
           const SizedBox(height: 30),
 
           Column(
