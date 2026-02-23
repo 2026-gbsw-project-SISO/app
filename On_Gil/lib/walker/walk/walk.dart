@@ -129,34 +129,38 @@ class _PedestrianDetectionPageState extends State<PedestrianDetectionPage> {
     await _vibrateWarning();
   }
 
-
+  // 횡단보도 못찾음 -> 짧고 잘게 파르르 떨리는 진동
   Future<void> _vibrateShort() async {
     if (await Vibration.hasVibrator() ?? false) {
-      Vibration.vibrate(duration: 200);
+      Vibration.vibrate(pattern: [0, 50, 50, 50, 50, 50, 50, 50]);
     }
   }
 
+  // 횡단보도 발견 -> 툭 던지듯 가볍게 한번 확인 신호
   Future<void> _vibrateLong() async {
     if (await Vibration.hasVibrator() ?? false) {
-      Vibration.vibrate(duration: 500);
+      Vibration.vibrate(duration: 100);
     }
   }
 
+  // 빨간불 발견 -> 길고 강하게 두 번
   Future<void> _vibrateRed() async {
     if (await Vibration.hasVibrator() ?? false) {
-      Vibration.vibrate(pattern: [0, 800, 1000, 800]);
+      Vibration.vibrate(pattern: [0, 1000, 500, 800]);
     }
   }
 
+  // 초록불 발견 -> 심장 박동 리듬
   Future<void> _vibrateGreen() async {
     if (await Vibration.hasVibrator() ?? false) {
-      Vibration.vibrate(pattern: [0, 300, 300, 300, 300, 300]);
+      Vibration.vibrate(pattern: [0, 400, 200, 400, 200, 400]);
     }
   }
-
+  // 신호등 없음 -> 횡단보도는 찾았지만 신호등은 못찾은 것이기에
+  // 툭 던지는 신호 후 잘게 떨리는 신호
   Future<void> _vibrateWarning() async {
     if (await Vibration.hasVibrator() ?? false) {
-      Vibration.vibrate(duration: 400);
+      Vibration.vibrate(pattern: [0, 100, 200, 50, 50, 50, 50, 50]);
     }
   }
 

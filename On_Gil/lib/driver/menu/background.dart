@@ -43,22 +43,23 @@ class Bground extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [
-              Icon(Icons.volume_up, size: 35, color: Colors.black),
+              Icon(Icons.notifications, size: 35, color: Colors.black),
               SizedBox(height: 8),
               Text(
-                '백그라운드 재생 중',
+                '해당 기능은 \n추가중입니다.',
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   fontFamily: 'Inter',
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
-        ),
     );
   }
 }

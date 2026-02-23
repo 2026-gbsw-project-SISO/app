@@ -59,11 +59,12 @@ class WMain extends StatelessWidget {
                     ),
                   );
                 },
-  ),
+              ),
             ],
           ),
         ),
       ),
+
     );
   }
 
@@ -75,7 +76,7 @@ class WMain extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onTap ?? () {},
         style: ElevatedButton.styleFrom(
-          elevation: 3,
+          elevation: 10,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(18),
           ),

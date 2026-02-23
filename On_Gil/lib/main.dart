@@ -6,11 +6,26 @@ import 'package:geolocator/geolocator.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:audioplayers/audioplayers.dart';
 
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await initializeService();
+  runApp(const OnGilApp(
+  ));
+}
 
+Future<void> initializeService() async {
+  LocationPermission permission = await Geolocator.checkPermission();
 
+  if (permission == LocationPermission.denied) {
+    await Geolocator.requestPermission();
+  }
 
-void main() {
-  runApp(const OnGilApp());
+  FlutterTts tts = FlutterTts();
+  await tts.setLanguage("ko-KR");
+  await tts.stop();
+
+  AudioPlayer player = AudioPlayer();
+  await player.setReleaseMode(ReleaseMode.stop);
 }
 
 class OnGilApp extends StatefulWidget {
@@ -266,10 +281,16 @@ class _MainScreenState extends State<MainScreen> {
 
     if (permission == LocationPermission.deniedForever) return;
 
-    Geolocator.getPositionStream().listen((Position position) {
+    Geolocator.getPositionStream(
+      locationSettings: const LocationSettings(
+        accuracy: LocationAccuracy.bestForNavigation,
+        distanceFilter: 5,
+      ),
+    ).listen((Position position) {
       _currentPosition = position;
       _checkDistance();
-    });
+      }
+    );
   }
 
   void _checkDistance() {

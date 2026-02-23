@@ -66,7 +66,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 "다크 모드",
                 style: TextStyle(
                   fontSize: 30,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w900,
                   fontFamily: 'Inter',
                 ),
               ),
@@ -94,13 +94,16 @@ class _SettingsPageState extends State<SettingsPage> {
               value: _intensity,
               min: 0.2,
               max: 1.0,
-              divisions: 4,
+              divisions: 10,
               label: _intensity.toStringAsFixed(1),
               onChanged: (value) {
                 setState(() {
                   _intensity = value;
-                });
+                  }
+                );
               },
+              activeColor: Colors.black,
+              inactiveColor: Colors.black,
             ),
 
             const SizedBox(height: 20),
